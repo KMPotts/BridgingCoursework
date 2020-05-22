@@ -1,0 +1,25 @@
+{% load static %}
+
+<html>
+<head>
+  <title>Katie's Blog</title>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+  <link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+</head>
+  <body>
+    <div class="page-header">
+      <h1>Katie Potts' Blog</h1>
+    </div>
+    <h4>Contains a portfolio of work and discussion of various Computer Science topics</h4>
+    <div class="content container">
+    <div class="row">
+        <div class="col-md-8">
+          {% block content %}
+          {% endblock %}
+        </div>
+    </div>
+</div>
+  </body>
+</html>
