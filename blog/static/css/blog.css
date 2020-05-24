@@ -1,3 +1,5 @@
+@font-face { font-family: 'open-dyslexic'; src: url('../font/opendyslexic.otf'); }
+
 .page-header {
     background-color: #7D307E;
     margin-top: 0;
@@ -10,12 +12,21 @@
     text-decoration: none;
 }
 
+.page-header h2, .pageheader h2 a {
+  color: #ffffff;
+  font-size: 14pt;
+}
+
+div {
+  font-family: 'open-dyslexic';
+}
+
 .content {
     margin-left: 40px;
 }
 
 h1, h2, h3, h4 {
-    font-family: 'Lobster', cursive;
+    font-family: 'open-dyslexic';
 }
 
 .date {
