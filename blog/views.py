@@ -44,61 +44,90 @@ def post_edit(request, pk):
     return render(request, 'blog/post_edit.html', {'form': form})
 
 def cv(request):
-    return render(request, 'blog/cv.html')
+    acadQuery = AcademicObject.objects.order_by('-gradYear')
+    academics = list(acadQuery)
+    achiQuery = AchievementModel.objects.all()
+    achievements = list(achiQuery)
+    achievementSorted = sortAchievements(achievements)
+    codeQuery = CodingSkill.objects.all()
+    codings = list(codeQuery)
+    codingsSorted = sortCodings(codings)
+    intrQuery = InterestModel.objects.all()
+    interests = list(intrQuery)
+    return render(request, 'blog/cv.html', {'academics': academics, 'achievements': achievementSorted, 'codings': codingsSorted, 'interests': interests})
 
-def coding_edit(request):
+def sortAchievements(achievements):
+    months = [("January", 0), ("February", 1), ("March", 2), ("April", 3), ("May", 4), ("June", 5), ("July", 6), ("August", 7), ("September", 8), ("October", 9), ("November", 10), ("December", 11) ]
+    sortableList = []
+    for achievement in achievements:
+        sortingValue = (achievement.year*100) + next(item for item in months if item[0] == achievement.month)[1]
+        sortableList.append((achievement, sortingValue))
+    sortableList.sort(key=lambda tup: tup[1])
+    sortableList.reverse()
+    finalList = []
+    for tuple in sortableList:
+        finalList.append(tuple[0])
+    return finalList
+
+def sortCodings(codings):
+    highList = []
+    midList = []
+    lowList = []
+    finalList = []
+    for skill in codings:
+        if skill.proficiency == 'Fluent':
+            highList.append(skill)
+        elif skill.proficiency == 'Working Knowledge':
+            lowList.append(skill)
+        else:
+            midList.append(skill)
+    finalList = highList + midList + lowList
+    return finalList
+
+def coding_new(request):
     form = CodingForm()
     if request.method == "POST":
         form = CodingForm(request.POST)
         if form.is_valid():
             skill = form.save(commit=False)
-            skill.skill = request.skill
-            skill.proficiency = request.proficiency
             skill.save()
-            return redirect('cv', pk=skill.pk)
+            return redirect('cv')
     else:
         form = CodingForm()
     return render(request, 'blog/coding_edit.html', {'form':form})
 
-def academic_edit(request):
+def academic_new(request):
     form = AcademicForm()
     if request.method == "POST":
         form = AcademicForm(request.POST)
         if form.is_valid():
             academic = form.save(commit=False)
-            academic.institution = request.institution
-            skill.details = request.details
-            skill.save()
-            return redirect('cv', pk=academic.pk)
+            academic.save()
+            return redirect('cv')
     else:
         form = AcademicForm()
     return render(request, 'blog/academic_edit.html', {'form':form})
 
-def achievement_edit(request):
+def achievement_new(request):
     form = AchievementForm()
     if request.method == "POST":
         form = AchievementForm(request.POST)
-        if form.is_valid():
-            achievement = form.save(commit=False)
-            achievement.label = request.label
-            achievement.year = request.year
-            achievement.month = request.month
+        if form.is_valid:
+            achievement = form.save(commit = False)
             achievement.save()
-            return redirect('cv', pk=achievement.pk)
+            return redirect('cv')
     else:
         form = AchievementForm()
     return render(request, 'blog/achievement_edit.html', {'form': form})
 
-def interest_edit(request):
+def interest_new(request):
     form = InterestForm()
     if request.method == "POST":
         form = InterestForm(request.POST)
         if form.is_valid():
             interest = form.save(commit=False)
-            interest.title = request.title
-            interest.details = request.details
             interest.save()
-            return redirect('cv', pk=achievement.pk)
+            return redirect('cv')
     else:
         form = InterestForm()
     return render(request, 'blog/interest_edit.html', {'form': form})

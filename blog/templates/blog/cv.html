@@ -7,22 +7,48 @@
 
 <h3>Academics</h3>
 {% if user.is_authenticated %}
-  <a class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></a>
+  <a href="cv/new_academic"><button><span class="glyphicon glyphicon-plus"></span></button></a>
 {% endif %}
+{% for academic in academics %}
+      <div class="academic">
+            <h4>{{ academic.institution }}</h4>
+            <p>Leaving year: {{ academic.gradYear }}</p>
+            <p>{{ academic.details }}</p>
+     </div>
+{% endfor %}
 
 <h3>Coding Skills</h3>
 {% if user.is_authenticated %}
-  <a class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></a>
+  <a href="cv/new_coding"><button><span class="glyphicon glyphicon-plus"></span></button></a>
 {% endif %}
+{% for skill in codings %}
+      <div class="coding">
+            <h4>{{ skill.skill }}</h4>
+            <p>{{ skill.proficiency }}</p>
+     </div>
+{% endfor %}
 
 <h3>Other Achievements</h3>
 {% if user.is_authenticated %}
-  <a class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></a>
+  <a href="cv/new_achievement"><button><span class="glyphicon glyphicon-plus"></span></button></a>
+  {% for achievement in achievements %}
+        <div class="achievement">
+              <h4>{{ achievement.label }}</h4>
+              <p>Date: {{ academic.month }} {{ academic.year }}</p>
+              <p>{{ academic.details }}</p>
+       </div>
+  {% endfor %}
 {% endif %}
 
 <h3>Other Interests</h3>
 {% if user.is_authenticated %}
-  <a class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></a>
+  <a href="cv/new_interest"><button><span class="glyphicon glyphicon-plus"></span></button></a>
+  {% for interest in interests %}
+        <div class="interest">
+              <h4>{{ interest.title }}</h4>
+              <p>{{ interest.details }}</p>
+       </div>
+  {% endfor %}
 {% endif %}
 
 {% endblock %}

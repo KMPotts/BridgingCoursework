@@ -14,7 +14,7 @@ class CodingForm(forms.ModelForm):
 class AcademicForm(forms.ModelForm):
     class Meta:
         model = AcademicObject
-        fields = ('institution', 'details')
+        fields = ('institution', 'details', 'gradYear')
 
 class AchievementForm(forms.ModelForm):
     class Meta:
