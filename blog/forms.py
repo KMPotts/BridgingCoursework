@@ -19,7 +19,7 @@ class AcademicForm(forms.ModelForm):
 class AchievementForm(forms.ModelForm):
     class Meta:
         model = AchievementModel
-        fields = ('label', 'year', 'month')
+        fields = ('label', 'year', 'month', 'details')
 
 class InterestForm(forms.ModelForm):
     class Meta:

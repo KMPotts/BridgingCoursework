@@ -11,5 +11,10 @@ urlpatterns = [
     path('cv/new_academic', views.academic_new, name='new_academic'),
     path('cv/new_interest', views.interest_new, name='new_interest'),
     path('cv/new_achievement', views.achievement_new, name='new_achievement'),
+    path('coding/<int:pk>/edit/', views.coding_edit, name='coding_edit'),
+    path('academic/<int:pk>/edit/', views.academic_edit, name='academic_edit'),
+    path('interest/<int:pk>/edit/', views.interest_edit, name='interest_edit'),
+    path('achievement/<int:pk>/edit/', views.achievement_edit, name='achievement_edit'),
+
 
 ]

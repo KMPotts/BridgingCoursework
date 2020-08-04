@@ -1,6 +1,6 @@
 from selenium import webdriver
 from django.test import TestCase
-from django.urls import resolve
+from django.urls import resolve, reverse
 from django.http import HttpRequest
 from django.contrib.auth.models import User
 from django.test import Client
@@ -176,9 +176,49 @@ class CVTest(TestCase):
         self.assertIn('<form method="POST" class="interest-form">', html)
 
     #Katie edits an achievement
+    def test_achievement_edit_page_exists(self):
+        testAchievement = AchievementModel.objects.create(label = 'testAchievement2', year = 2019, month = 'April', details = 'Test Test Test')
+        found = resolve(reverse('achievement_edit', args = [testAchievement.pk]))
+        self.assertEqual(found.func, views.achievement_edit)
+
+    def test_achievement_edit_button_exists(self):
+        AchievementModel.objects.create(label = 'testAchievement3', year = 2019, month = 'April', details = 'Test Test Test')
+        response = admin.get('/cv')
+        html = response.content.decode('utf8')
+        self.assertIn('<a class="btn btn-default" href="/achievement/1/edit/">', html)
 
     #Katie edits a coding skill
+    def test_coding_edit_page_exists(self):
+        testCoding = CodingSkill.objects.create(skill = 'testSkill2', proficiency = 'Fluent')
+        found = resolve(reverse('coding_edit', args = [testCoding.pk]))
+        self.assertEqual(found.func, views.coding_edit)
+
+    def test_coding_edit_button_exists(self):
+        CodingSkill.objects.create(skill = 'testSkill3', proficiency = 'Fluent')
+        response = admin.get('/cv')
+        html = response.content.decode('utf8')
+        self.assertIn('<a class="btn btn-default" href="/coding/1/edit/">', html)
 
     #Katie edits a part of her academic record
+    def test_academic_edit_page_exists(self):
+        testAcademic = AcademicObject.objects.create(institution = 'testSchool2', details = 'Not a real place, just a test')
+        found = resolve(reverse('academic_edit', args = [testAcademic.pk]))
+        self.assertEqual(found.func, views.academic_edit)
+
+    def test_academic_edit_button_exists(self):
+        testAcademic = AcademicObject.objects.create(institution = 'testSchool3', details = 'Not a real place, just a test')
+        response = admin.get('/cv')
+        html = response.content.decode('utf8')
+        self.assertIn('<a class="btn btn-default" href="/academic/1/edit/">', html)
 
     #Katie edits an interest
+    def test_interest_edit_page_exists(self):
+        testInterest = InterestModel.objects.create(title = 'testInterest2', details = 'test test test test test')
+        found = resolve(reverse('interest_edit', args = [testInterest.pk]))
+        self.assertEqual(found.func, views.interest_edit)
+
+    def test_interest_edit_button_exists(self):
+        InterestModel.objects.create(title = 'testInterest3', details = 'test test test test test')
+        response = admin.get('/cv')
+        html = response.content.decode('utf8')
+        self.assertIn('<a class="btn btn-default" href="/interest/1/edit/">', html)

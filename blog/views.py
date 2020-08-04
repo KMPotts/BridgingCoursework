@@ -131,3 +131,51 @@ def interest_new(request):
     else:
         form = InterestForm()
     return render(request, 'blog/interest_edit.html', {'form': form})
+
+def coding_edit(request, pk):
+    coding = get_object_or_404(CodingSkill, pk=pk)
+    if request.method == "POST":
+        form = CodingForm(request.POST, instance=coding)
+        if form.is_valid():
+            coding = form.save(commit=False)
+            coding.save()
+            return redirect('cv')
+    else:
+        form = CodingForm(instance=coding)
+    return render(request, 'blog/coding_edit.html', {'form': form})
+
+def academic_edit(request, pk):
+    academic = get_object_or_404(AcademicObject, pk=pk)
+    if request.method == "POST":
+        form = AcademicForm(request.POST, instance=academic)
+        if form.is_valid():
+            academic = form.save(commit=False)
+            academic.save()
+            return redirect('cv')
+    else:
+        form = AcademicForm(instance=academic)
+    return render(request, 'blog/academic_edit.html', {'form': form})
+
+def achievement_edit(request, pk):
+    achievement = get_object_or_404(AchievementModel, pk=pk)
+    if request.method == "POST":
+        form = AchievementForm(request.POST, instance=achievement)
+        if form.is_valid():
+            achievement = form.save(commit=False)
+            achievement.save()
+            return redirect('cv')
+    else:
+        form = AchievementForm(instance=achievement)
+    return render(request, 'blog/achievement_edit.html', {'form': form})
+
+def interest_edit(request, pk):
+    interest = get_object_or_404(InterestModel, pk=pk)
+    if request.method == "POST":
+        form = InterestForm(request.POST, instance=interest)
+        if form.is_valid():
+            interest = form.save(commit=False)
+            interest.save()
+            return redirect('cv')
+    else:
+        form = InterestForm(instance=interest)
+    return render(request, 'blog/interest_edit.html', {'form': form})
